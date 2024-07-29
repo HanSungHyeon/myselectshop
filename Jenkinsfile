@@ -19,6 +19,7 @@ pipeline{
                 withCredentials([file(credentialsId: 'shop', variable: 'shop')]) {
                     script {
                         sh 'pwd'
+                        sh 'chmod -R 755 ./scr/main/resources'
                         sh 'cp $shop ./src/main/resources/application-prod.yml'
                     }
                 }
