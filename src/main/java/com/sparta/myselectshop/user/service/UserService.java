@@ -20,7 +20,7 @@ public class UserService {
 	private final PasswordEncoder passwordEncoder;
 	private final UserMapper userMapper;
 
-	@Value("${key}")
+	@Value("${ADMINTOKEN}")
 	private String ADMIN_TOKEN;
 
 	public void signup(SignupReqDto dto) throws IllegalAccessException {

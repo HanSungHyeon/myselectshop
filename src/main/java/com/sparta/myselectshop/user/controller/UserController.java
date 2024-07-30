@@ -1,6 +1,9 @@
 package com.sparta.myselectshop.user.controller;
 
 import com.sparta.myselectshop.user.dto.req.SignupReqDto;
+import com.sparta.myselectshop.user.entity.UserRoleEnum;
+import com.sparta.myselectshop.user.mapper.UserMapper;
+import com.sparta.myselectshop.user.service.UserDetailsImpl;
 import com.sparta.myselectshop.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +23,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserController {
 	private final UserService userService;
+	private final UserMapper userMapper;
 
 	//페이지 이동
 	@GetMapping("/user/login-page")
@@ -49,7 +53,13 @@ public class UserController {
 	}
 
 	//회원 정보 받기
-//	@GetMapping("/user-info")
-//	@ResponseBody
-//	public ResponseEntity getUserInfo(@AuthenticationPrincipal UserDetailsIm)
+	@GetMapping("/user-info")
+	@ResponseBody
+	public ResponseEntity getUserInfo(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		String username = userDetails.getUser().getUsername();
+		UserRoleEnum role = userDetails.getUser().getRole();
+		boolean isAdmin = role == UserRoleEnum.ADMIN;
+
+		return ResponseEntity.ok(userMapper.toUserInfo(username, isAdmin));
+	}
 }
