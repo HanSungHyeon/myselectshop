@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.security.Key;
-import java.security.SignatureException;
 import java.util.Base64;
 import java.util.Date;
 
@@ -31,6 +30,7 @@ public class JwtUtil {
 
 	@PostConstruct
 	public void init() {
+		log.info("key test : {}", secretkey);
 		byte[] bytes = Base64.getDecoder().decode(secretkey);
 		key = Keys.hmacShaKeyFor(bytes);
 	}

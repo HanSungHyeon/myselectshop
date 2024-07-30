@@ -38,7 +38,7 @@ public class UserController {
 	}
 
 	//회원 가입
-	@PostMapping("/user/signiup")
+	@PostMapping("/user/signup")
 	public String signup(@Valid SignupReqDto dto, BindingResult bindingResult) throws IllegalAccessException {
 		List<FieldError> fieldErrors = bindingResult.getFieldErrors();
 		if (!fieldErrors.isEmpty()) {
