@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.product.service;
 
+import com.sparta.myselectshop.naver.dto.res.ItemDto;
 import com.sparta.myselectshop.product.dto.req.ProductMyPriceReqDto;
 import com.sparta.myselectshop.product.entity.Product;
 import com.sparta.myselectshop.product.repository.ProductRepository;
@@ -47,5 +48,12 @@ public class ProductService {
 		return findProduct
 				.orElseThrow(() -> new NullPointerException("해당 상품을 찾을 수 없습니다."));
 
+	}
+
+	//스케줄러로 찾아서 업데이트
+	public void updateBySearch(Long id, ItemDto dto) {
+		Product findProduct = findProduct(id);
+
+		findProduct.setLprice(dto.getLprice());
 	}
 }
