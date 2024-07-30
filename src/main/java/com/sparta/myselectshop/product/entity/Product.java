@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.product.entity;
 
+import com.sparta.myselectshop.util.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -7,7 +8,7 @@ import lombok.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Product {
+public class Product extends TimeStamped {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "product_id")
@@ -15,9 +16,11 @@ public class Product {
 
 	private String title;
 
-	private long lPrice;
+	private String image;
 
-	private long myPrice = 0;
+	private int lprice;
+
+	private int myprice = 0;
 
 	private String link;
 
