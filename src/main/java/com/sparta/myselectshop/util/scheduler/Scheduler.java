@@ -25,7 +25,7 @@ public class Scheduler {
 	@Scheduled(cron = "0 0 1 * * *")
 	public void updatePrice() throws InterruptedException {
 		log.info("스케줄러 실행");
-		List<Product> productList = productService.findAllProduct();
+		List<Product> productList = productRepository.findAll();
 
 		for (Product product : productList) {
 			TimeUnit.SECONDS.sleep(1);

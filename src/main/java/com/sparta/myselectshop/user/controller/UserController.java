@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.user.controller;
 
+import com.sparta.myselectshop.folder.service.FolderService;
 import com.sparta.myselectshop.user.dto.req.SignupReqDto;
 import com.sparta.myselectshop.user.entity.UserRoleEnum;
 import com.sparta.myselectshop.user.mapper.UserMapper;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,7 @@ import java.util.List;
 public class UserController {
 	private final UserService userService;
 	private final UserMapper userMapper;
+	private final FolderService folderService;
 
 	//페이지 이동
 	@GetMapping("/user/login-page")
@@ -61,5 +64,13 @@ public class UserController {
 		boolean isAdmin = role == UserRoleEnum.ADMIN;
 
 		return ResponseEntity.ok(userMapper.toUserInfo(username, isAdmin));
+	}
+
+	@GetMapping("/user-folder")
+	public String getUserInfo(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+		model.addAttribute("folders", folderService.getFolders(userDetails.getUser()));
+
+		return "index :: #fragment";
 	}
 }
