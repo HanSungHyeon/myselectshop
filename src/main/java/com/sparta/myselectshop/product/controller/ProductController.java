@@ -24,8 +24,6 @@ import java.util.List;
 public class ProductController {
 	private final ProductService productService;
 	private final ProductMapper productMapper;
-	private final UserService userService;
-	private final UserMapper userMapper;
 
 	//등록
 	@PostMapping("/products")
@@ -60,5 +58,33 @@ public class ProductController {
 		List<ProductResDto> res = productMapper.toProductResDtoList(productService.findAllProduct());
 
 		return ResponseEntity.ok(res);
+	}
+
+	@PostMapping("/products/{productId}/folder")
+	public void addFolder(
+			@PathVariable Long productId,
+			@RequestParam Long folderId,
+			@AuthenticationPrincipal UserDetailsImpl userDetails
+	) {
+		productService.addFolder(productId, folderId, userDetails.getUser());
+	}
+
+	@GetMapping("/folders/{folderId}/products")
+	public Page<ProductResDto> getProductsInFolder(
+			@PathVariable Long folderId,
+			@RequestParam int page,
+			@RequestParam int size,
+			@RequestParam String sortBy,
+			@RequestParam boolean isAsc,
+			@AuthenticationPrincipal UserDetailsImpl userDetails
+	) {
+		return productService.getProductsInFolder(
+				folderId,
+				page-1,
+				size,
+				sortBy,
+				isAsc,
+				userDetails.getUser()
+		);
 	}
 }

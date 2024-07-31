@@ -5,6 +5,9 @@ import com.sparta.myselectshop.util.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -28,5 +31,8 @@ public class Product extends TimeStamped {
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
+
+	@OneToMany(mappedBy = "product")
+	private List<ProductFolder> productFolderList = new ArrayList<>();
 
 }
