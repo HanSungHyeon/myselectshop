@@ -11,6 +11,7 @@ import com.sparta.myselectshop.user.mapper.UserMapper;
 import com.sparta.myselectshop.user.service.UserDetailsImpl;
 import com.sparta.myselectshop.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -36,11 +37,15 @@ public class ProductController {
 		return ResponseEntity.ok(res);
 	}
 
-	//조회
 	@GetMapping("/products")
-	public ResponseEntity findAllProductList(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-		List<ProductResDto> res = productService.findAllProduct(userDetails.getUser());
-		return ResponseEntity.ok(res);
+	public Page<ProductResDto> getProducts(
+			@RequestParam("page") int page,
+			@RequestParam("size") int size,
+			@RequestParam("sortBy") String sortBy,
+			@RequestParam("isAsc") boolean isAsc,
+			@AuthenticationPrincipal UserDetailsImpl userDetails) {
+		// 응답 보내기
+		return productService.getProducts(userDetails.getUser(),  page-1, size, sortBy, isAsc);
 	}
 
 	@PutMapping("/products/{id}")
