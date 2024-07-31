@@ -2,8 +2,10 @@ package com.sparta.myselectshop.product.service;
 
 import com.sparta.myselectshop.naver.dto.res.ItemDto;
 import com.sparta.myselectshop.product.dto.req.ProductMyPriceReqDto;
+import com.sparta.myselectshop.product.dto.res.ProductResDto;
 import com.sparta.myselectshop.product.entity.Product;
 import com.sparta.myselectshop.product.repository.ProductRepository;
+import com.sparta.myselectshop.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -20,9 +22,16 @@ public class ProductService {
 	public static final int MIN_MY_PRICE = 100;
 
 	//등록
-	public Product creatProduct(Product product) {
+	public Product creatProduct(Product product, User user) {
 		log.info("관심 상품 : {}", product.getTitle());
+		product.setUser(user);
+
 		return productRepository.save(product);
+	}
+
+	//전부 조회 - 해당 유저
+	public List<ProductResDto> findAllProduct(User user) {
+		return productRepository.findAllByUser(user);
 	}
 
 	//전부 조회

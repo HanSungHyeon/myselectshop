@@ -1,5 +1,6 @@
 package com.sparta.myselectshop.product.entity;
 
+import com.sparta.myselectshop.user.entity.User;
 import com.sparta.myselectshop.util.TimeStamped;
 import jakarta.persistence.*;
 import lombok.*;
@@ -23,5 +24,9 @@ public class Product extends TimeStamped {
 	private int myprice = 0;
 
 	private String link;
+
+	@ManyToOne
+	@JoinColumn(name = "user_id")
+	private User user;
 
 }
